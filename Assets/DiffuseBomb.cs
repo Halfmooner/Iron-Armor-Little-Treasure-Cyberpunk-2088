@@ -14,7 +14,7 @@ public class DiffuseBomb : MonoBehaviour
     public float timer = 0f;
     public bool diffused;
     public Image progressBar;
-    public GameObject progressBarBack;
+    public GameObject progressBarBack, HiddenEnemy, aimed;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +42,15 @@ public class DiffuseBomb : MonoBehaviour
         {
             progressBarBack.SetActive(true);
             timer += Time.deltaTime;
+            if (timer >= 1.5f)
+            {
+                if (HiddenEnemy)
+                {
+                    HiddenEnemy.SetActive(true);
+                    aimed.SetActive(true);
+                }
+            }
+
             if (timer >= 3.5f)
             {
                 if (!EnemyRange.killedAll)
@@ -49,6 +58,7 @@ public class DiffuseBomb : MonoBehaviour
                     progressBarBack.SetActive(false);
                     progressBar.fillAmount = 0;
                     timer = 0f;
+                    aimed.SetActive(false);
                     Fail.SetActive(true);
                     StartCoroutine(Restart());
                 }
